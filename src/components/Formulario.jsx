@@ -1,8 +1,33 @@
 import React from 'react'
 
+import { useState } from 'react'
+import useLetras from '../hooks/useLetras'
+
 const Formulario = () => {
+
+    const {setAlerta} = useLetras();
+
+    const [busqueda, setBusqueda] = useState({
+        artista: '',
+        cancion: ''
+    })
+
+    const handleSubmit = (e) => { 
+        e.preventDefault();
+
+        if (Object.values(busqueda).includes('')) {
+            setAlerta('Coloca Artista y Canción');
+            return;
+        }
+
+        setAlerta('');
+
+    }
+
   return (
-    <form>
+    <form
+        onSubmit={handleSubmit}
+    >
         <legend>Busca por artistas y canción</legend>
 
         <div className="form-grid">
@@ -12,6 +37,10 @@ const Formulario = () => {
                     type='text'
                     name='artista'
                     placeholder='Nombre Artista'
+                    value={busqueda.artista}
+                    onChange={ e=> setBusqueda({
+                        ...busqueda, [e.target.name] : e.target.value
+                    })}
                 />
             </div>
 
@@ -19,8 +48,12 @@ const Formulario = () => {
                 <label htmlFor="">Canción </label>
                 <input 
                     type='text'
-                    name='canción'
+                    name='cancion'
                     placeholder='Nombre Canción'
+                    value={busqueda.cancion}
+                    onChange={ e=> setBusqueda({
+                        ...busqueda, [e.target.name] : e.target.value
+                    })}
                 />
             </div>
 
