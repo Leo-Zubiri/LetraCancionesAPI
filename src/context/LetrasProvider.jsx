@@ -6,10 +6,21 @@ const LetrasProvider = ({children}) => {
 
     const [alerta, setAlerta] = useState('');
 
+    const busquedaLetra = async (busqueda) => { 
+        try {
+            const {artista,cancion} = busqueda;
+            const url = `https://api.lyrics.ovh/v1/${artista}/${cancion}`;
+
+            console.log(url)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <LetrasContext.Provider
             value={{
-                alerta,setAlerta
+                alerta,setAlerta,busquedaLetra
             }}
         >
         {children}
